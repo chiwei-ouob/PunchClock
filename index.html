@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punch Clock</title>
+    <style>
+        /* CSS: Styles for layout and the toggle switch */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 320px;
+        }
+
+        h2 { margin-top: 0; color: #555; }
+
+        /* The Output Text */
+        .output-box {
+            background: #eef;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            border: 2px solid #dde;
+            margin-bottom: 20px;
+            font-family: monospace; /* Monospace makes data easier to read */
+        }
+
+        /* The Switch Container */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* The Toggle Switch (CSS Hack) */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input { 
+            opacity: 0; 
+            width: 0; 
+            height: 0; 
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #2196F3; /* Blue for Clock IN */
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #e74c3c; /* Red for Clock OUT */
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Copy Button */
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        button:hover { background-color: #555; }
+        button:active { transform: scale(0.98); }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Punch Clock</h2>
+    
+    <div id="result" class="output-box">Loading...</div>
+
+    <div class="switch-container">
+        <span>IN</span>
+        <label class="switch">
+            <input type="checkbox" id="modeToggle">
+            <span class="slider"></span>
+        </label>
+        <span>OUT</span>
+    </div>
+
+    <button onclick="copyText()" id="copyBtn">Copy to Clipboard</button>
+</div>
+
+<script>
+    // --- JAVASCRIPT LOGIC ---
+
+    const display = document.getElementById('result');
+    const toggle = document.getElementById('modeToggle');
+    const copyBtn = document.getElementById('copyBtn');
+
+    // Helper: Adds a leading zero to numbers < 10 (e.g., 9 -> 09)
+    function pad(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    // Main Function: Generates the string
+    function updateState() {
+        const now = new Date();
+        
+        // Date parts
+        const month = pad(now.getMonth() + 1); // Months are 0-11
+        const day = pad(now.getDate());
+        
+        // Time parts
+        const hours = pad(now.getHours());
+        const minutes = pad(now.getMinutes());
+
+        // Determine status based on checkbox
+        // Unchecked = Clock In, Checked = Clock Out
+        const status = toggle.checked ? '下班' : '上班';
+
+        // 3. Assemble the string
+        const finalString = `${month}/${day} ${status} ${hours}:${minutes}`;
+        
+        // Update HTML
+        display.innerText = finalString;
+    }
+
+    // 4. Copy Function
+    function copyText() {
+        const textToCopy = display.innerText;
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            // Success Feedback
+            const originalText = copyBtn.innerText;
+            copyBtn.innerText = "Copied!";
+            copyBtn.style.backgroundColor = "#4CAF50"; // Green
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                copyBtn.innerText = originalText;
+                copyBtn.style.backgroundColor = "#333";
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            alert("Clipboard access failed. You might need to run this via a local server or HTTPS.");
+        });
+    }
+
+    // Event Listeners
+    // Run updateState immediately
+    updateState();
+    
+    // Update when the switch is clicked
+    toggle.addEventListener('change', updateState);
+
+    // Update automatically every second (to catch minute changes)
+    setInterval(updateState, 1000);
+
+</script>
+
+</body>
+</html>

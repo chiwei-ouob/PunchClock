@@ -20,7 +20,7 @@ function updateState() {
     const minutes = pad(now.getMinutes());
 
     // Determine status
-    const status = toggle.checked ? 'clockout' : 'clockin';
+    const status = toggle.checked ? '下班' : '上班';
 
     // Assemble the string
     const finalString = `${month}/${day} ${status} ${hours}:${minutes}`;

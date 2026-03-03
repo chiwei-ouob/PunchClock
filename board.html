@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticeboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script type="module" src="board.js" defer></script>
+</head>
+<body style="height: auto; display: block; padding: 20px 0;"> <div style="max-width: 1000px; width: 90%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+        <h2>📋 Office Noticeboard</h2>
+        <a href="index.html" style="text-decoration: none; color: #2196F3; font-weight: bold;">⬅ Back to Clock</a>
+    </div>
+
+    <div class="board-layout">
+        <div class="composer-card">
+            <h3>Assign a Task</h3>
+            <textarea id="taskInput" placeholder="E.g., Night shift guys, please clean the coffee machine before clock out."></textarea>
+            
+            <button id="getTagsBtn" class="btn-primary">✨ Get AI Tags</button>
+
+            <div id="reviewArea" class="hidden" style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc;">
+                <label for="tagsInput" style="font-size: 0.9rem; font-weight: bold; color: #555;">Review Tags (Comma separated):</label>
+                <input type="text" id="tagsInput" placeholder="Night Shift, Cleaning">
+                <button id="postTaskBtn" class="btn-success">📤 Post to Noticeboard</button>
+            </div>
+        </div>
+
+        <div class="tasks-grid" id="tasksContainer">
+            <div style="color: #888;">Connecting to database...</div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -6,16 +6,18 @@ import { getFirestore, collection, onSnapshot, query, orderBy } from "https://ww
 // 🔴 ACTION REQUIRED: PASTE YOUR RENDER URL
 // e.g., 'https://my-discord-bot.onrender.com'
 // ==========================================
-const RENDER_API_URL = 'YOUR_RENDER_URL_HERE';
+const RENDER_API_URL = 'https://mcserverobserver.onrender.com';
 
 // ==========================================
 // 🔴 ACTION REQUIRED: PASTE YOUR FIREBASE CONFIG
 // ==========================================
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    // ... add the rest of your config fields here
+  apiKey: "AIzaSyBmdhRmjQr9Wh8IO6WRE7Y6YY0Q3we16Pc",
+  authDomain: "punch-clock-be60d.firebaseapp.com",
+  projectId: "punch-clock-be60d",
+  storageBucket: "punch-clock-be60d.firebasestorage.app",
+  messagingSenderId: "476580749685",
+  appId: "1:476580749685:web:f273c87ab5b7bfb905333c"
 };
 
 // Initialize Firebase

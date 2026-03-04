@@ -18,6 +18,14 @@ body {
     width: 320px;
 }
 
+.divider-soft {
+    border: 0;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 20px 0 5px 0; /* Adds breathing room above and below */
+    width: 100%;
+}
+
 h2 { margin-top: 0; color: #555; }
 
 .output-box {
